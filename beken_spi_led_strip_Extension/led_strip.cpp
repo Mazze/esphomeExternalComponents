@@ -123,7 +123,7 @@ void BekenSPILEDStripLightOutput::setup() {
 
   size_t buffer_size = this->get_buffer_size_();
   size_t dma_buffer_size = (buffer_size * 8) + (2 * 64);
-
+  this->is_multi_chip = false;
   ExternalRAMAllocator<uint8_t> allocator(ExternalRAMAllocator<uint8_t>::ALLOW_FAILURE);
   this->buf_ = allocator.allocate(buffer_size);
   if (this->buf_ == nullptr) {
@@ -239,10 +239,14 @@ void BekenSPILEDStripLightOutput::setup() {
   REG_WRITE(SPI_CONFIG, value);
 }
 
-void BekenSPILEDStripLightOutput::set_led_params(uint8_t bit0, uint8_t bit1, uint32_t spi_frequency) {
+void BekenSPILEDStripLightOutput::set_led_params(uint8_t bit0, uint8_t bit1, uint32_t spi_frequency, uint32_t multi_chip ) {
   this->bit0_ = bit0;
   this->bit1_ = bit1;
   this->spi_frequency_ = spi_frequency;
+  if (multi_chip>0)
+    this->is_multi_chip = true;
+  else
+    this->is_multi_chip = false;
 }
 
 void BekenSPILEDStripLightOutput::write_state(light::LightState *state) {
@@ -284,14 +288,14 @@ void BekenSPILEDStripLightOutput::write_state(light::LightState *state) {
   // The 64 byte padding is a workaround for a SPI DMA bug where the
   // output doesn't exactly start at the beginning of dma_buf_
 
-  while (size < buffer_size) {
-    uint8_t b = *psrc;
-    for (int i = 0; i < 8; i++) {
-      *pdest++ = b & (1 << (7 - i)) ? this->bit1_ : this->bit0_;
+    while (size < buffer_size) {
+      uint8_t b = *psrc;
+      for (int i = 0; i < 8; i++) {
+       *pdest++ = b & (1 << (7 - i)) ? this->bit1_ : this->bit0_;
+      }
+      size++;
+      psrc++;
     }
-    size++;
-    psrc++;
-  }
 
   spi_data->first_run = false;
   spi_dma_tx_enable(1);
@@ -333,7 +337,7 @@ light::ESPColorView BekenSPILEDStripLightOutput::get_view_internal(int32_t index
       b = 0;
       break;
   }
-  uint8_t multiplier = this->is_rgbw_ || this->is_wrgb_ ? 4 : 3;
+  uint8_t multiplier = (this->is_multi_chip ? 7 : (this->is_rgbw_ || this->is_wrgb_ ? 4 : 3));
   uint8_t white = this->is_wrgb_ ? 0 : 3;
 
   return {this->buf_ + (index * multiplier) + r + this->is_wrgb_,
