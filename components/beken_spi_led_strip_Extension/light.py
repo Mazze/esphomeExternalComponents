@@ -19,7 +19,7 @@ DEPENDENCIES = ["libretiny"]
 
 beken_spi_led_strip_ns = cg.esphome_ns.namespace("beken_spi_led_strip")
 BekenSPILEDStripLightOutput = beken_spi_led_strip_ns.class_(
-    "BekenSPILEDStripLightOutput", light.AddressableLight
+    "BekenSPILEDStripLightOutput_Extension", light.AddressableLight
 )
 
 RGBOrder = beken_spi_led_strip_ns.enum("RGBOrder")
@@ -97,7 +97,7 @@ def _validate_num_leds(value):
 CONFIG_SCHEMA = cv.All(
     light.ADDRESSABLE_LIGHT_SCHEMA.extend(
         {
-            cv.GenerateID(CONF_OUTPUT_ID): cv.declare_id(BekenSPILEDStripLightOutput_Extension),
+            cv.GenerateID(CONF_OUTPUT_ID): cv.declare_id(BekenSPILEDStripLightOutput),
             cv.Required(CONF_PIN): cv.All(
                 pins.internal_gpio_output_pin_number, _validate_pin
             ),
