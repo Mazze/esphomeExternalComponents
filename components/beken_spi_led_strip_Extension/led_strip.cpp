@@ -244,6 +244,7 @@ void BekenSPILEDStripLightOutput_Extension::set_led_params(uint8_t bit0, uint8_t
   this->bit0_ = bit0;
   this->bit1_ = bit1;
   this->spi_frequency_ = spi_frequency;
+  this->is_multi_chipnum =multi_chip;
   if (multi_chip>0)
   {
     this->is_multi_chip = true;
@@ -346,7 +347,7 @@ light::ESPColorView BekenSPILEDStripLightOutput_Extension::get_view_internal(int
   }
   uint8_t multiplier = (this->is_multi_chip ? 7 : (this->is_rgbw_ || this->is_wrgb_ ? 4 : 3));
   uint8_t white = this->is_wrgb_ ? 0 : 3;
-  ESP_LOGI(TAG, "Write with multipier %d",multiplier); 
+  ESP_LOGI(TAG, "Write with multipier %d, multiChip: %u",multiplier, this->is_multi_chipnum); 
   return {this->buf_ + (index * multiplier) + r + this->is_wrgb_,
           this->buf_ + (index * multiplier) + g + this->is_wrgb_,
           this->buf_ + (index * multiplier) + b + this->is_wrgb_,
