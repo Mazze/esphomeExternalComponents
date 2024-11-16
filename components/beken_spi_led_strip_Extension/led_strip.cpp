@@ -123,6 +123,7 @@ void BekenSPILEDStripLightOutput_Extension::setup() {
 
   size_t buffer_size = this->get_buffer_size_();
   size_t dma_buffer_size = (buffer_size * 8) + (2 * 64);
+  ESP_LOGI(TAG, "LED buffer size %d", buffer_size);
   this->is_multi_chip = false;
   ExternalRAMAllocator<uint8_t> allocator(ExternalRAMAllocator<uint8_t>::ALLOW_FAILURE);
   this->buf_ = allocator.allocate(buffer_size);
@@ -244,9 +245,15 @@ void BekenSPILEDStripLightOutput_Extension::set_led_params(uint8_t bit0, uint8_t
   this->bit1_ = bit1;
   this->spi_frequency_ = spi_frequency;
   if (multi_chip>0)
+  {
     this->is_multi_chip = true;
+    ESP_LOGI(TAG, "Multi chip true ");
+  }
   else
+  {
     this->is_multi_chip = false;
+    ESP_LOGI(TAG, "Multi chip false");
+  }
 }
 
 void BekenSPILEDStripLightOutput_Extension::write_state(light::LightState *state) {
@@ -339,7 +346,7 @@ light::ESPColorView BekenSPILEDStripLightOutput_Extension::get_view_internal(int
   }
   uint8_t multiplier = (this->is_multi_chip ? 7 : (this->is_rgbw_ || this->is_wrgb_ ? 4 : 3));
   uint8_t white = this->is_wrgb_ ? 0 : 3;
-
+  ESP_LOGI(TAG, "Write with multipier %d",multiplier); 
   return {this->buf_ + (index * multiplier) + r + this->is_wrgb_,
           this->buf_ + (index * multiplier) + g + this->is_wrgb_,
           this->buf_ + (index * multiplier) + b + this->is_wrgb_,

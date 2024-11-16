@@ -55,7 +55,7 @@ CHIPSETS = {
     "SM16703": LEDStripTimings(
         0b11000000, 0b11111110, 7500000, 0
     ),  # Clock divider: 8, Bit time: 1200ns
-    "SM16703+4": LEDStripTimings(
+    "SM16707": LEDStripTimings(
         0b11000000, 0b11111110, 7500000, 1
     ),  # Clock divider: 8, Bit time: 1200ns
 }
