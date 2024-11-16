@@ -118,7 +118,7 @@ void spi_dma_tx_finish_callback(unsigned int param) {
   spi_dma_tx_enable(0);
 }
 
-void BekenSPILEDStripLightOutput::setup() {
+void BekenSPILEDStripLightOutput_Extension::setup() {
   ESP_LOGCONFIG(TAG, "Setting up Beken SPI LED Strip...");
 
   size_t buffer_size = this->get_buffer_size_();
@@ -239,7 +239,7 @@ void BekenSPILEDStripLightOutput::setup() {
   REG_WRITE(SPI_CONFIG, value);
 }
 
-void BekenSPILEDStripLightOutput::set_led_params(uint8_t bit0, uint8_t bit1, uint32_t spi_frequency, uint32_t multi_chip ) {
+void BekenSPILEDStripLightOutput_Extension::set_led_params(uint8_t bit0, uint8_t bit1, uint32_t spi_frequency, uint32_t multi_chip ) {
   this->bit0_ = bit0;
   this->bit1_ = bit1;
   this->spi_frequency_ = spi_frequency;
@@ -249,7 +249,7 @@ void BekenSPILEDStripLightOutput::set_led_params(uint8_t bit0, uint8_t bit1, uin
     this->is_multi_chip = false;
 }
 
-void BekenSPILEDStripLightOutput::write_state(light::LightState *state) {
+void BekenSPILEDStripLightOutput_Extension::write_state(light::LightState *state) {
   // protect from refreshing too often
   uint32_t now = micros();
   if (*this->max_refresh_rate_ != 0 && (now - this->last_refresh_) < *this->max_refresh_rate_) {
@@ -303,7 +303,7 @@ void BekenSPILEDStripLightOutput::write_state(light::LightState *state) {
   this->status_clear_warning();
 }
 
-light::ESPColorView BekenSPILEDStripLightOutput::get_view_internal(int32_t index) const {
+light::ESPColorView BekenSPILEDStripLightOutput_Extension::get_view_internal(int32_t index) const {
   int32_t r = 0, g = 0, b = 0;
   switch (this->rgb_order_) {
     case ORDER_RGB:
@@ -348,7 +348,7 @@ light::ESPColorView BekenSPILEDStripLightOutput::get_view_internal(int32_t index
           &this->correction_};
 }
 
-void BekenSPILEDStripLightOutput::dump_config() {
+void BekenSPILEDStripLightOutput_Extension::dump_config() {
   ESP_LOGCONFIG(TAG, "Beken SPI LED Strip:");
   ESP_LOGCONFIG(TAG, "  Pin: %u", this->pin_);
   const char *rgb_order;
@@ -380,7 +380,7 @@ void BekenSPILEDStripLightOutput::dump_config() {
   ESP_LOGCONFIG(TAG, "  Number of LEDs: %u", this->num_leds_);
 }
 
-float BekenSPILEDStripLightOutput::get_setup_priority() const { return setup_priority::HARDWARE; }
+float BekenSPILEDStripLightOutput_Extension::get_setup_priority() const { return setup_priority::HARDWARE; }
 
 }  // namespace beken_spi_led_strip
 }  // namespace esphome
