@@ -349,7 +349,8 @@ light::ESPColorView BekenSPILEDStripLightOutput_Extension::get_view_internal(int
   }
   uint8_t multiplier = (this->is_multi_chip ? 7 : (this->is_rgbw_ || this->is_wrgb_ ? 4 : 3));
   uint8_t white = this->is_wrgb_ ? 0 : 3;
-  ESP_LOGI(TAG, "Write with multipier %d, multiChip: %u, debug %u",multiplier, this->is_multi_chip,this->testVar); 
+  ESP_LOGI(TAG, "Write with multipier %d, multiChip: %s, num %d, debug %u",multiplier, this->is_multi_chip ? "true" : "false",this->is_multi_chipnum, this->testVar); 
+  
   return {this->buf_ + (index * multiplier) + r + this->is_wrgb_,
           this->buf_ + (index * multiplier) + g + this->is_wrgb_,
           this->buf_ + (index * multiplier) + b + this->is_wrgb_,
