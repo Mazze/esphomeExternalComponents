@@ -16,11 +16,11 @@ from esphome.const import (
 
 
 CODEOWNERS = ["@Mat931"]
-DEPENDENCIES = ["libretiny"]
+DEPENDENCIES = ["libretiny", "beken_spi_led_strip"]
 
 beken_spi_led_strip_ns = cg.esphome_ns.namespace("beken_spi_led_strip")
 BekenSPILEDStripLightOutput = beken_spi_led_strip_ns.class_(
-    "BekenSPILEDStripLightOutput_Extension", light.AddressableLight,beken_spi_led_strip
+    "BekenSPILEDStripLightOutput_Extension", light.AddressableLight
 )
 
 RGBOrder = beken_spi_led_strip_ns.enum("RGBOrder")
