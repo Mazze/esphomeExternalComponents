@@ -130,7 +130,7 @@ async def to_code(config):
             chipset.bit0,
             chipset.bit1,
             chipset.spi_frequency,
-            chipset.multi_chip,1
+            chipset.multi_chip
         )
     )
 
