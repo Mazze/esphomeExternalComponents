@@ -20,7 +20,7 @@ DEPENDENCIES = ["libretiny"]
 
 beken_spi_led_strip_ns = cg.esphome_ns.namespace("beken_spi_led_strip")
 BekenSPILEDStripLightOutput = beken_spi_led_strip_ns.class_(
-    "BekenSPILEDStripLightOutput_Extension", light.AddressableLight
+    "BekenSPILEDStripLightOutput_Extension", light.AddressableLight,beken_spi_led_strip.led_strip
 )
 
 RGBOrder = beken_spi_led_strip_ns.enum("RGBOrder")
