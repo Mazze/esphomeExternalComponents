@@ -41,7 +41,7 @@ class LEDStripTimings:
     bit0: int
     bit1: int
     spi_frequency: int
-    multi_chip: int
+
 
 
 CHIPSETS = {
