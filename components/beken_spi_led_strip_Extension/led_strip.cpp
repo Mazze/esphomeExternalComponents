@@ -120,7 +120,7 @@ void spi_dma_tx_finish_callback(unsigned int param) {
 
 void BekenSPILEDStripLightOutput_Extension::setup() {
   ESP_LOGCONFIG(TAG, "Setting up Beken SPI LED Strip...");
-
+  this->testVar=1;
   size_t buffer_size = this->get_buffer_size_();
   size_t dma_buffer_size = (buffer_size * 8) + (2 * 64);
   ESP_LOGI(TAG, "LED buffer size %d", buffer_size);
@@ -130,6 +130,7 @@ void BekenSPILEDStripLightOutput_Extension::setup() {
   if (this->buf_ == nullptr) {
     ESP_LOGE(TAG, "Cannot allocate LED buffer!");
     this->mark_failed();
+    this->testVar=2;
     return;
   }
 
@@ -137,6 +138,7 @@ void BekenSPILEDStripLightOutput_Extension::setup() {
   if (this->effect_data_ == nullptr) {
     ESP_LOGE(TAG, "Cannot allocate effect data!");
     this->mark_failed();
+    this->testVar=3;
     return;
   }
 
@@ -144,6 +146,7 @@ void BekenSPILEDStripLightOutput_Extension::setup() {
   if (this->dma_buf_ == nullptr) {
     ESP_LOGE(TAG, "Cannot allocate DMA buffer!");
     this->mark_failed();
+    this->testVar=4;
     return;
   }
 
@@ -160,6 +163,7 @@ void BekenSPILEDStripLightOutput_Extension::setup() {
   if (spi_data != nullptr) {
     ESP_LOGE(TAG, "SPI device already initialized!");
     this->mark_failed();
+    this->testVar=5;
     return;
   }
 
@@ -167,6 +171,7 @@ void BekenSPILEDStripLightOutput_Extension::setup() {
   if (spi_data == nullptr) {
     ESP_LOGE(TAG, "Cannot allocate spi_data!");
     this->mark_failed();
+    this->testVar=6;
     return;
   }
 
@@ -174,6 +179,7 @@ void BekenSPILEDStripLightOutput_Extension::setup() {
   if (spi_data->dma_tx_semaphore == nullptr) {
     ESP_LOGE(TAG, "TX Semaphore init faild!");
     this->mark_failed();
+    this->testVar=7;
     return;
   }
 
@@ -238,6 +244,7 @@ void BekenSPILEDStripLightOutput_Extension::setup() {
   value &= ~(0xFFF << 8);
   value |= ((dma_buffer_size & 0xFFF) << 8);
   REG_WRITE(SPI_CONFIG, value);
+  this->testVar=8;
 }
 
 void BekenSPILEDStripLightOutput_Extension::set_led_params(uint8_t bit0, uint8_t bit1, uint32_t spi_frequency, uint32_t multi_chip ) {
@@ -347,7 +354,7 @@ light::ESPColorView BekenSPILEDStripLightOutput_Extension::get_view_internal(int
   }
   uint8_t multiplier = (this->is_multi_chip ? 7 : (this->is_rgbw_ || this->is_wrgb_ ? 4 : 3));
   uint8_t white = this->is_wrgb_ ? 0 : 3;
-  ESP_LOGI(TAG, "Write with multipier %d, multiChip: %u",multiplier, this->is_multi_chip); 
+  ESP_LOGI(TAG, "Write with multipier %d, multiChip: %u, debug %u",multiplier, this->is_multi_chip,this->testVar); 
   return {this->buf_ + (index * multiplier) + r + this->is_wrgb_,
           this->buf_ + (index * multiplier) + g + this->is_wrgb_,
           this->buf_ + (index * multiplier) + b + this->is_wrgb_,

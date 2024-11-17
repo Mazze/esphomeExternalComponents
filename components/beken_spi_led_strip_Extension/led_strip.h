@@ -71,6 +71,7 @@ class BekenSPILEDStripLightOutput_Extension : public light::AddressableLight {
   bool is_wrgb_;
   bool is_multi_chip;
   uint32_t is_multi_chipnum;
+  uint32_t testVar=0;
 
   uint32_t spi_frequency_{6666666};
   uint8_t bit0_{0xE0};
