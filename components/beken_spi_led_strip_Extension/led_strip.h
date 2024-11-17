@@ -58,9 +58,9 @@ class BekenSPILEDStripLightOutput_Extension : public BekenSPILEDStripLightOutput
   // void dump_config() override;
 
  protected:
-  light::ESPColorView get_view_internal(int32_t index) const override;
+  light::ESPColorView get_view_internal(int32_t index) const ;
 
-  size_t get_buffer_size_() const override { return this->num_leds_ * (this->is_multi_chip ? 7 : (this->is_rgbw_ || this->is_wrgb_ ? 4 : 3)); }
+  size_t get_buffer_size_() const  { return this->num_leds_ * (this->is_multi_chip ? 7 : (this->is_rgbw_ || this->is_wrgb_ ? 4 : 3)); }
 
   // uint8_t *buf_{nullptr};
   // uint8_t *effect_data_{nullptr};
