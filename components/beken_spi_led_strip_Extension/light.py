@@ -16,7 +16,8 @@ from esphome.const import (
 
 
 CODEOWNERS = ["@Mat931"]
-DEPENDENCIES = ["libretiny", "beken_spi_led_strip"]
+DEPENDENCIES = ["libretiny", ]
+AUTO_LOAD =["beken_spi_led_strip"]
 
 beken_spi_led_strip_ns = cg.esphome_ns.namespace("beken_spi_led_strip")
 BekenSPILEDStripLightOutput = beken_spi_led_strip_ns.class_(
