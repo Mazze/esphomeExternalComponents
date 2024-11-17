@@ -120,7 +120,6 @@ void spi_dma_tx_finish_callback(unsigned int param) {
 
 void BekenSPILEDStripLightOutput_Extension::setup() {
   ESP_LOGCONFIG(TAG, "Setting up Beken SPI LED Strip...");
-  this->testVar=1;
   size_t buffer_size = this->get_buffer_size_();
   size_t dma_buffer_size = (buffer_size * 8) + (2 * 64);
   ESP_LOGI(TAG, "LED buffer size %d", buffer_size);
@@ -130,7 +129,6 @@ void BekenSPILEDStripLightOutput_Extension::setup() {
   if (this->buf_ == nullptr) {
     ESP_LOGE(TAG, "Cannot allocate LED buffer!");
     this->mark_failed();
-    this->testVar=2;
     return;
   }
 
@@ -138,7 +136,6 @@ void BekenSPILEDStripLightOutput_Extension::setup() {
   if (this->effect_data_ == nullptr) {
     ESP_LOGE(TAG, "Cannot allocate effect data!");
     this->mark_failed();
-    this->testVar=3;
     return;
   }
 
@@ -146,7 +143,6 @@ void BekenSPILEDStripLightOutput_Extension::setup() {
   if (this->dma_buf_ == nullptr) {
     ESP_LOGE(TAG, "Cannot allocate DMA buffer!");
     this->mark_failed();
-    this->testVar=4;
     return;
   }
 
@@ -162,8 +158,7 @@ void BekenSPILEDStripLightOutput_Extension::setup() {
 
   if (spi_data != nullptr) {
     ESP_LOGE(TAG, "SPI device already initialized!");
-    this->mark_failed();
-    this->testVar=5;
+    this->mark_failed();    
     return;
   }
 
@@ -171,7 +166,6 @@ void BekenSPILEDStripLightOutput_Extension::setup() {
   if (spi_data == nullptr) {
     ESP_LOGE(TAG, "Cannot allocate spi_data!");
     this->mark_failed();
-    this->testVar=6;
     return;
   }
 
@@ -179,7 +173,6 @@ void BekenSPILEDStripLightOutput_Extension::setup() {
   if (spi_data->dma_tx_semaphore == nullptr) {
     ESP_LOGE(TAG, "TX Semaphore init faild!");
     this->mark_failed();
-    this->testVar=7;
     return;
   }
 
@@ -243,8 +236,7 @@ void BekenSPILEDStripLightOutput_Extension::setup() {
   value = REG_READ(SPI_CONFIG);
   value &= ~(0xFFF << 8);
   value |= ((dma_buffer_size & 0xFFF) << 8);
-  REG_WRITE(SPI_CONFIG, value);
-  this->testVar=8;
+  REG_WRITE(SPI_CONFIG, value);  
 }
 
 void BekenSPILEDStripLightOutput_Extension::set_led_params(uint8_t bit0, uint8_t bit1, uint32_t spi_frequency, uint32_t multi_chip ) {
@@ -252,15 +244,18 @@ void BekenSPILEDStripLightOutput_Extension::set_led_params(uint8_t bit0, uint8_t
   this->bit1_ = bit1;
   this->spi_frequency_ = spi_frequency;
   this->is_multi_chipnum =multi_chip;
+  this->testVar=2;
   if (multi_chip>0)
   {
     this->is_multi_chip = true;
     ESP_LOGI(TAG, "Multi chip true ");
+    this->testVar=3;
   }
   else
   {
     this->is_multi_chip = false;
     ESP_LOGI(TAG, "Multi chip false");
+    this->testVar=4;
   }
 }
 
