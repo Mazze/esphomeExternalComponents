@@ -24,7 +24,7 @@ namespace beken_spi_led_strip {
 class BekenSPILEDStripLightOutput_Extension : public BekenSPILEDStripLightOutput {
  public:
   // void setup() override;
-  void write_state(light::LightState *state) override;
+  // void write_state(light::LightState *state) override;
   // float get_setup_priority() const override;
 
   // int32_t size() const override { return this->num_leds_; }
