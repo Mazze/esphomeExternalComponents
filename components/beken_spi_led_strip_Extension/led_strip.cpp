@@ -122,8 +122,7 @@ void BekenSPILEDStripLightOutput_Extension::setup() {
   ESP_LOGCONFIG(TAG, "Setting up Beken SPI LED Strip...");
   size_t buffer_size = this->get_buffer_size_();
   size_t dma_buffer_size = (buffer_size * 8) + (2 * 64);
-  ESP_LOGI(TAG, "LED buffer size %d", buffer_size);
-  this->is_multi_chip = false;
+  ESP_LOGI(TAG, "LED buffer size %d", buffer_size);  
   ExternalRAMAllocator<uint8_t> allocator(ExternalRAMAllocator<uint8_t>::ALLOW_FAILURE);
   this->buf_ = allocator.allocate(buffer_size);
   if (this->buf_ == nullptr) {
