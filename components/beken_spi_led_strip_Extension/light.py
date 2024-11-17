@@ -6,7 +6,7 @@ from esphome import pins
 from esphome.components import libretiny, light,switch
 from esphome.const import (    
     CONF_CHIPSET,
-    CONF_IS_RGBW,ss
+    CONF_IS_RGBW,
     CONF_MAX_REFRESH_RATE,
     CONF_NUM_LEDS,
     CONF_OUTPUT_ID,
