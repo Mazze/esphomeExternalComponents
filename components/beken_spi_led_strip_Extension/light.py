@@ -3,16 +3,17 @@ from dataclasses import dataclass
 import esphome.codegen as cg
 import esphome.config_validation as cv
 from esphome import pins
-from esphome.components import libretiny, light
-from esphome.const import (
+from esphome.components import libretiny, light,switch
+from esphome.const import (    
     CONF_CHIPSET,
-    CONF_IS_RGBW,
+    CONF_IS_RGBW,ss
     CONF_MAX_REFRESH_RATE,
     CONF_NUM_LEDS,
     CONF_OUTPUT_ID,
     CONF_PIN,
     CONF_RGB_ORDER,
 )
+
 
 CODEOWNERS = ["@Mat931"]
 DEPENDENCIES = ["libretiny"]
@@ -93,6 +94,9 @@ def _validate_num_leds(value):
         )
     return value
 
+# HomeassistantSwitch = homeassistant_ns.class_(
+#     "HomeassistantSwitch", switch.Switch, cg.Component
+# )
 
 CONFIG_SCHEMA = cv.All(
     light.ADDRESSABLE_LIGHT_SCHEMA.extend(
