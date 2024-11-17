@@ -46,7 +46,7 @@ class BekenSPILEDStripLightOutput_Extension : public BekenSPILEDStripLightOutput
   /// Set a maximum refresh rate in µs as some lights do not like being updated too often.
   // void set_max_refresh_rate(uint32_t interval_us) { this->max_refresh_rate_ = interval_us; }
 
-  void set_led_params(uint8_t bit0, uint8_t bit1, uint32_t spi_frequency, uint32_t multi_chip);
+  // void set_led_params(uint8_t bit0, uint8_t bit1, uint32_t spi_frequency, uint32_t multi_chip);
 
   // void set_rgb_order(RGBOrder rgb_order) { this->rgb_order_ = rgb_order; }
 
@@ -60,7 +60,7 @@ class BekenSPILEDStripLightOutput_Extension : public BekenSPILEDStripLightOutput
  protected:
   light::ESPColorView get_view_internal(int32_t index) const ;
 
-  size_t get_buffer_size_() const  { return this->num_leds_ * (this->is_multi_chip ? 7 : (this->is_rgbw_ || this->is_wrgb_ ? 4 : 3)); }
+  size_t get_buffer_size_() const  { return this->num_leds_ * 7; }
 
   // uint8_t *buf_{nullptr};
   // uint8_t *effect_data_{nullptr};
@@ -70,7 +70,7 @@ class BekenSPILEDStripLightOutput_Extension : public BekenSPILEDStripLightOutput
   // uint16_t num_leds_;
   // bool is_rgbw_;
   // bool is_wrgb_;
-  bool is_multi_chip;
+  // bool is_multi_chip;
   // uint32_t is_multi_chipnum;
   // uint32_t testVar=0;
 
