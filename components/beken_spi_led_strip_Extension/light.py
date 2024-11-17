@@ -3,7 +3,7 @@ from dataclasses import dataclass
 import esphome.codegen as cg
 import esphome.config_validation as cv
 from esphome import pins
-from esphome.components import libretiny, light,switch
+from esphome.components import libretiny, light, beken_spi_led_strip
 from esphome.const import (    
     CONF_CHIPSET,
     CONF_IS_RGBW,

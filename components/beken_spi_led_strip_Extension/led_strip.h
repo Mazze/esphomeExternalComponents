@@ -3,6 +3,7 @@
 #ifdef USE_BK72XX
 
 #include "esphome/components/light/addressable_light.h"
+#include "esphome/components/sensor/sensor.h"
 #include "esphome/components/beken_spi_led_strip/led_strip.h"
 #include "esphome/components/light/light_output.h"
 #include "esphome/core/color.h"
